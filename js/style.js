@@ -3,8 +3,10 @@ $( document ).ready(function() {
          $('#md_addMfg').modal('show');
       });
 
-      $( "#btn_addModel" ).click(function() {
+      $( "#btn_addModel").click(function() {
         $('#md_addModel').modal('show');
      });
-
+     $('#viewpopup').click(function() {
+       alert('g');
+     });
 });

@@ -29,7 +29,7 @@ class DB {
      * Returns rows from the database based on the conditions
     */
     public function getDetails(){
-        $getDetails = "select * from model_details order by model_name asc";
+        $getDetails = "select mfgd.mfg_name as mfgname,modd.* from model_details modd join manufacturer_details mfgd on modd.mfg_id = mfgd.mfg_id  order by modd.model_name asc";
         $query      = $this->db->prepare($getDetails);
         $query->execute();
         if($query->rowCount() > 0){
@@ -53,7 +53,7 @@ class DB {
             if(!empty($data) && isset($data)){
             $columnString = implode(',', array_keys($data));
             $valueString = implode(',', array_values($data));
-            $insertMfg = "insert into manufacturer_details(mfg_id,mfg_name)values('".$valueString."')";
+            $insertMfg = "insert into manufacturer_details(mfg_name)values('".$valueString."')";
             $insertQuery = $this->db->prepare($insertMfg);
             $insertQuery->execute();
             if($insertQuery){
@@ -67,9 +67,20 @@ class DB {
 
   public function insertModel($modelData){
     if(isset($modelData) && !empty($modelData)){
-    $insertModel = "insert into model_details(mfg_id,model_name,model_color,model_year,model_number,notes,model_isSold) values(".$modelData['modelMfg'].",'".$modelData['modelName']."','".$modelData['modelColor']."','".$modelData['modelYear']."','".$modelData['modelNumber']."','".$modelData['modelNotes']."',0)";
-    $insertQuery = $this->db->prepare($insertModel);
-    $insertQuery->execute();
+      /* this code was to check for the count, but here theres a confusion hence commented the code */
+      // $validateNameQuery = "select * from model_details where model_name = '".$modelData['modelName']."' and mfg_id = ".$modelData['modelMfg']."";
+      // $queryValidate =  $this->db->prepare($validateNameQuery);
+      // $queryValidate->execute();
+      // if($queryMfg->rowCount() > 0){
+      //   print_r('yes');
+      // }else {
+      //   $insertModel = "insert into model_details(mfg_id,model_name,model_color,model_year,model_number,notes,model_isSold) values(".$modelData['modelMfg'].",'".$modelData['modelName']."','".$modelData['modelColor']."','".$modelData['modelYear']."','".$modelData['modelNumber']."','".$modelData['modelNotes']."',0)";
+      //   $insertQuery = $this->db->prepare($insertModel);
+      //   $insertQuery->execute();
+      // }
+      $insertModel = "insert into model_details(mfg_id,model_name,model_color,model_year,model_number,notes,model_isSold) values(".$modelData['modelMfg'].",'".$modelData['modelName']."','".$modelData['modelColor']."','".$modelData['modelYear']."','".$modelData['modelNumber']."','".$modelData['modelNotes']."',0)";
+      $insertQuery = $this->db->prepare($insertModel);
+      $insertQuery->execute();
     if($insertModel){
         return $modelData;
     }else{

@@ -18,6 +18,7 @@ angular.module("carInv", [])
     };
     $scope.addMfg = function(){
         $scope.saveMfg();
+        location.reload();
     };
 
    // function to insert or update user data to the database

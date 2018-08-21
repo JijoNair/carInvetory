@@ -28,18 +28,18 @@
         <th>Sr #</th>
         <th>Manufacturer</th>
         <th>Model Name</th>
-        <th>Count</th>
-        <th>Edit</th>
+        <th>Model Number</th>
+        <th>Action</th>
     </tr>
   </thead>
   <tbody>
-  <tr ng-repeat="car in cars| filter:search_query">
+  <tr ng-repeat="car in cars">
       <td>{{$index + 1}}</td>
-      <td>{{car.mfg_id}}</td>
+      <td>{{car.mfgname}}</td>
       <td>{{car.model_name}}</td>
-      <td>{{car.model_year}}</td>
+      <td>{{car.model_number}}</td>
       <td class="selectable">
-        <a href="#">Edit</a>
+        <i class="file link icon" data-title="Using click events"  data-content="Add users to your feed" id="viewpopup"></i>
       </td>
     </tr>
   </tbody>
@@ -125,6 +125,29 @@
         <button class="ui button" type="submit" ng-click="addModel()">Add Model</button>
     </div>
   </div>
+</form>
+</div>
+    </div>
+</div>
+
+
+<!-- view modal  -->
+
+
+<div class="ui modal" id="view_model">
+  <i class="close icon"></i>
+  <div class="header">
+   Car Model Details
+  </div>
+    <div class="description ui segment">
+      <div class="ui header"></div>
+      <div class="ui segment">
+      <form class="ui form">
+  <div class="field">
+    <label>Manufacturer Name</label>
+    <input type="text" name="in_MfgName" placeholder="Name" id="in_MfgName" ng-model="mfgData.name">
+  </div>
+  <button class="ui button" type="submit" ng-click="addMfg()">Submit</button>
 </form>
 </div>
     </div>
