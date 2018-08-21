@@ -77,54 +77,6 @@ angular.module("carInv", [])
       });
     };
 
-    /*// function to add user data
-    $scope.addUser = function(){
-        $scope.saveUser('add');
-    };
-
-    // function to edit user data
-    $scope.editUser = function(user){
-        $scope.tempUserData = {
-            id:user.id,
-            name:user.name,
-            email:user.email,
-            phone:user.phone,
-            created:user.created
-        };
-        $scope.index = $scope.users.indexOf(user);
-        $('.formData').slideDown();
-    };
-
-    // function to update user data
-    $scope.updateUser = function(){
-        $scope.saveUser('edit');
-    };
-
-    // function to delete user data from the database
-    $scope.deleteUser = function(user){
-        var conf = confirm('Are you sure to delete the user?');
-        if(conf === true){
-            var data = $.param({
-                'id': user.id,
-                'type':'delete'
-            });
-            var config = {
-                headers : {
-                    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
-                }
-            };
-            $http.post("action.php",data,config).success(function(response){
-                if(response.status == 'OK'){
-                    var index = $scope.users.indexOf(user);
-                    $scope.users.splice(index,1);
-                    $scope.messageSuccess(response.msg);
-                }else{
-                    $scope.messageError(response.msg);
-                }
-            });
-        }
-    };
-
     // function to display success message
     $scope.messageSuccess = function(msg){
         $('.alert-success > p').html(msg);
