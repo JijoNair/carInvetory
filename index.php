@@ -2,11 +2,7 @@
 <html>
  <head>
   <title>Car Inventory v1.0</title>
-  <script src="js/jQuery.js"></script>
-  <script src="js/angular.js"></script>
-  <script src="js/app.js"></script>
-  <script src="semantic/dist/semantic.js"></script>
- <script src="js/style.js"></script>
+  
   <link rel="stylesheet" href="semantic/dist/semantic.css">
  </head>
         <body ng-app="carInv">
@@ -39,9 +35,10 @@
       <td>{{car.model_name}}</td>
       <td>{{car.model_number}}</td>
       <td class="selectable">
-        <i class="file link icon" data-title="Using click events"  data-content="Add users to your feed" id="viewpopup"></i>
+      <i class="file link icon" data-title="Using click events"  data-content="Add users to your feed" ng-click="viewpopup(car.model_id)"></i>
       </td>
     </tr>
+    
   </tbody>
 </table>
 </div>
@@ -57,7 +54,7 @@
     <div class="description ui segment">
       <div class="ui header">This will add a manufacturer for your car inventory</div>
       <div class="ui segment">
-      <form class="ui form">
+      <form class="ui form" id="fm_mfgadd">
   <div class="field">
     <label>Manufacturer Name</label>
     <input type="text" name="in_MfgName" placeholder="Name" id="in_MfgName" ng-model="mfgData.name">
@@ -77,7 +74,7 @@
     <div class="description ui segment">
       <div class="ui header">This wil add a car model for your car inventory</div>
       <div class="ui segment">
-      <form class="ui form">
+      <form class="ui form" id="frm_addModel">
       <div class="fields">
       <div class="field">
           <label>Select Manufacturer</label>
@@ -134,25 +131,58 @@
 <!-- view modal  -->
 
 
-<div class="ui modal" id="view_model">
+<div class="ui basic small modal" id="view_model">
   <i class="close icon"></i>
   <div class="header">
-   Car Model Details
+  {{carsdetails[0].mfgname}}'s
   </div>
     <div class="description ui segment">
       <div class="ui header"></div>
       <div class="ui segment">
       <form class="ui form">
   <div class="field">
-    <label>Manufacturer Name</label>
-    <input type="text" name="in_MfgName" placeholder="Name" id="in_MfgName" ng-model="mfgData.name">
   </div>
-  <button class="ui button" type="submit" ng-click="addMfg()">Submit</button>
+  <div class="ui card  field">
+  <div class="ui slide masked reveal image">
+    <img src="/images/avatar/large/jenny.jpg" class="visible content">
+    <img src="/images/avatar/large/elliot.jpg" class="hidden content">
+  </div>
+  <div class="content">
+    <a class="header">{{carsdetails[0].model_name}}</a>
+    <div class="meta">
+    <b> Model Year:</b> <span class="date">{{carsdetails[0].model_year}}</span><br/>
+     <b>Color: </b><span class="date">{{carsdetails[0].model_color}}</span><br/>
+      <b>Model Number:</b><span class="date">{{carsdetails[0].model_number}}</span><br/>
+    </div>
+  </div>
+  <div class="extra content">
+    <a>
+      <i class="file icon"></i> Notes:
+      {{carsdetails[0].notes}}
+
+    </a>
+  </div>
+  
+</div>
 </form>
 </div>
-    </div>
-</div>
-</div>
 
+</div>
+<div class="actions">
+    <div class="ui black deny button">
+close
+    </div>
+    <div class="ui positive right labeled icon button" ng-click="sellcar(carsdetails[0].model_id)">
+Sell this Car!!
+      <i class="checkmark icon"></i>
+    </div>
+  </div>
+</div>
+</div>
+<script src="js/jQuery.js"></script>
+  <script src="js/angular.js"></script>
+  <script src="js/app.js"></script>
+  <script src="semantic/dist/semantic.js"></script>
+ <script src="js/style.js"></script>
 </body>
 </html>

@@ -59,27 +59,36 @@ if(isset($_REQUEST['type']) && !empty($_REQUEST['type'])){
                   $data['status'] = 'ERR';
                   $data['msg'] = 'Some problem occurred, please try again.';
               }
+              echo json_encode($data);
             break;
-        /*
-        case "sold":
-            if(!empty($_POST['id'])){
-                $condition = array('id' => $_POST['id']);
-                $delete = $db->delete($tblName,$condition);
-                if($delete){
-                    $data['status'] = 'OK';
-                    $data['msg'] = 'User data has been deleted successfully.';
-                }else{
-                    $data['status'] = 'ERR';
-                    $data['msg'] = 'Some problem occurred, please try again.';
-                }
+            case "viewCarDetail":
+            if(!empty($_REQUEST['modelid'])){
+                $modeldetails = $db->getCarViewDetails($_REQUEST['modelid']);
+               
+            if($modeldetails){
+                $cardata['records'] = $db->getCarViewDetails($_REQUEST['modelid']);
+                $cardata['status'] = 'OK';
             }else{
-                $data['status'] = 'ERR';
-                $data['msg'] = 'Some problem occurred, please try again.';
+                $cardata['records'] = array();
+                $cardata['status'] = 'ERR';
             }
-            echo json_encode($data);
+
+            }
+            echo json_encode($cardata);
+            break;
+        
+        case "sellCar":
+            if(!empty($_REQUEST['modelid'])){
+                $updatecar = $db->sellcar($_REQUEST['modelid']);
+                if($updatecar){
+                    $updatecarstatus['status'] = 'OK';
+                }else{
+                    $updatecarstatus['status'] = 'ERR';
+                }
+            }
             break;
         default:
-            echo '{"status":"INVALID"}';*/
+            echo '{"status":"INVALID"}';
     }
 }
 ?>

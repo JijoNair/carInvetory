@@ -3,6 +3,15 @@
  * DB Class
  */
 class DB {
+    /*
+    deployment credentials
+    private $dbHost     = 'localhost';
+    private $dbUsername = 'id6868709_root';
+    private $dbPassword = 'jijoforu';
+    private $dbName     = 'id6868709_car_inventory';
+    public $db;
+    */
+
     // Database credentials
     private $dbHost     = 'localhost';
     private $dbUsername = 'root';
@@ -29,7 +38,7 @@ class DB {
      * Returns rows from the database based on the conditions
     */
     public function getDetails(){
-        $getDetails = "select mfgd.mfg_name as mfgname,modd.* from model_details modd join manufacturer_details mfgd on modd.mfg_id = mfgd.mfg_id  order by modd.model_name asc";
+        $getDetails = "select mfgd.mfg_name as mfgname,modd.* from model_details modd join manufacturer_details mfgd on modd.mfg_id = mfgd.mfg_id where modd.model_isSold = 0 order by modd.model_name asc";
         $query      = $this->db->prepare($getDetails);
         $query->execute();
         if($query->rowCount() > 0){
@@ -89,6 +98,25 @@ class DB {
     }
   }
 
+  public function getCarViewDetails($modelid){
+      if(isset($modelid) && !empty($modelid)){
+            $getcardetails= "select mfgd.mfg_name as mfgname,modd.* from model_details modd  join manufacturer_details mfgd on modd.mfg_id = mfgd.mfg_id and modd.model_id=".$modelid."  order by modd.model_name asc";
+            $query      = $this->db->prepare($getcardetails);
+        $query->execute();
+        if($query->rowCount() > 0){
+            $data = $query->fetchAll(PDO::FETCH_ASSOC);
+        }
+        return !empty($data)?$data:false;
+        }
+  }
+  public function sellcar($modelid){
+      if(isset($modelid) && !empty($modelid)){
+          $updatecarsell = "update model_details set model_isSold = 1 where model_id = ".$modelid."";
+          $query = $this->db->prepare($updatecarsell);
+          $query->execute();
+          
+      }
+      }
 }
 
 ?>
